@@ -75,7 +75,10 @@
     mask-image:linear-gradient(to bottom,#000 80%,transparent),linear-gradient(to right,transparent,#000 14%,#000 86%,transparent);
     mask-composite:intersect}
   /* art has a dark backdrop: lighten blend drops it into the page background */
-  .character img{height:100%;width:auto;object-fit:contain;mix-blend-mode:lighten;animation:float 6s ease-in-out infinite}
+  .character{transform:perspective(1200px) translate3d(var(--px,0px),var(--py,0px),0) rotateY(var(--ry,0deg));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  /* idle sway + bob, with breathing on the independent `scale` property so both run together */
+  .character img{height:100%;width:auto;object-fit:contain;mix-blend-mode:lighten;transform-origin:50% 100%;will-change:transform;
+    animation:idle 5.2s ease-in-out infinite,breathe 3.4s ease-in-out infinite}
   /* fallback shown until character.png exists */
   .placeholder{width:100%;height:100%;border:1px dashed rgba(184,156,242,.3);border-radius:200px 200px 0 0;
     background:linear-gradient(180deg,rgba(184,156,242,.12),rgba(139,106,224,.03));display:grid;place-items:center;
@@ -254,6 +257,9 @@
 
   @keyframes pulse{50%{opacity:.35}}
   @keyframes float{50%{transform:translateY(-10px)}}
+  @keyframes idle{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-8px) rotate(1.4deg)}
+    50%{transform:translateY(-16px) rotate(0deg)}75%{transform:translateY(-8px) rotate(-1.4deg)}}
+  @keyframes breathe{0%,100%{scale:1 1}50%{scale:1.012 1.022}}
   @keyframes wave{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
   @keyframes scroll{to{transform:translateX(-50%)}}
 
@@ -683,6 +689,19 @@
         : '"Boring. Harmless. Next."';
     }, 350 * lines.length);
   });
+</script>
+<script>
+// hero character leans toward the cursor (desktop only)
+(() => {
+  const c = document.querySelector('.character');
+  if (!c || matchMedia('(prefers-reduced-motion:reduce)').matches || !matchMedia('(pointer:fine)').matches) return;
+  addEventListener('mousemove', e => {
+    const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+    c.style.setProperty('--px', (x * 18) + 'px');
+    c.style.setProperty('--py', (y * 10) + 'px');
+    c.style.setProperty('--ry', (x * 6) + 'deg');
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
