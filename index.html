@@ -281,7 +281,9 @@
     .ghost{font-size:180px}
     .mood{width:180px}
   }
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}
+    /* keep the hero's gentle idle so the page isn't static; cursor parallax stays off */
+    .character img{animation:idle 5.2s ease-in-out infinite,breathe 3.4s ease-in-out infinite!important}}
 </style>
 </head>
 <body>
