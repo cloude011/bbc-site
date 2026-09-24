@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Booty Clank — $BBC</title>
+<meta name="description" content="Your waifu with brains, curves, and a little attitude. A playful AI agent. $BBC, soon on Clank.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23b89cf2' stroke='%23111' stroke-width='2'/%3E%3Crect x='10' y='8' width='3' height='7' rx='1.5' fill='%23111'/%3E%3Crect x='19' y='8' width='3' height='7' rx='1.5' fill='%23111'/%3E%3Cpath d='M6 18h20l-3 7H9z' fill='%23111'/%3E%3Cpath d='M8 18l2.5 3 2.5-3 2.5 3 2.5-3 2.5 3 2.5-3 2 3' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a090e; --bg2:#100e16; --panel:rgba(24,20,34,.72);
+    --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.12);
+    --text:#f4f1fa; --muted:#9a94a8; --dim:#5f5a6b;
+    --accent:#b89cf2; --accent-2:#8b6ae0; --warn:#f5a54a;
+    --sans:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .mono{font-family:var(--mono)}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(16px,4.5vw,86px);border-bottom:1px solid var(--line);background:rgba(10,9,14,.82);backdrop-filter:blur(14px)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:36px;height:36px;border-radius:9px;background:var(--accent);display:grid;place-items:center;
+    color:#1a1426;font-weight:800;font-size:22px;letter-spacing:-1px}
+  .brand-name{font-weight:800;font-size:26px;letter-spacing:-.5px}
+  .brand-sub{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfc9da;line-height:1.45;margin-left:10px}
+  nav{display:flex;gap:34px;font-size:14.5px;color:#cfc9da}
+  nav a:hover{color:var(--text)}
+  .btn-outline{display:inline-flex;align-items:center;gap:22px;border:1px solid var(--line2);border-radius:6px;
+    padding:11px 18px;font-size:13.5px;font-weight:600;transition:.2s}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+  .head-actions{display:flex;align-items:center;gap:10px}
+  .x-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:6px;color:#cfc9da;transition:.2s}
+  .x-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;min-height:calc(100vh - 81px);display:grid;grid-template-columns:1fr 1fr;
+    align-items:center;padding:0 clamp(16px,4.5vw,86px);overflow:hidden}
+  .grid-bg{position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:110px 110px;mask-image:radial-gradient(ellipse at 70% 45%,#000 10%,transparent 65%);opacity:.55}
+  .glow{position:absolute;right:8%;top:30%;width:640px;height:640px;border-radius:50%;
+    background:radial-gradient(circle,rgba(139,106,224,.28),transparent 65%);filter:blur(30px);pointer-events:none}
+  .ghost{position:absolute;right:-2%;top:12%;font-weight:800;font-size:clamp(200px,26vw,480px);line-height:.8;
+    letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(184,156,242,.1);pointer-events:none;user-select:none}
+  .ring{position:absolute;right:6%;top:18%;width:560px;height:560px;border:1px solid rgba(184,156,242,.1);border-radius:50%;pointer-events:none}
+
+  .copy{position:relative;z-index:2;padding-left:clamp(0px,10vw,240px)}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--accent);display:flex;align-items:center;gap:10px;margin-bottom:34px}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:pulse 2s infinite}
+  h1{font-size:clamp(46px,5.3vw,86px);font-weight:700;line-height:1.08;letter-spacing:-.045em}
+  h1 .hl{color:var(--accent)}
+  .lede{margin-top:34px;font-size:20px;line-height:1.55;color:var(--muted);max-width:320px}
+  .ctas{display:flex;align-items:center;gap:26px;margin-top:40px;flex-wrap:wrap}
+  .btn-primary{display:inline-flex;align-items:center;gap:26px;background:var(--accent);color:#1a1426;font-weight:600;
+    padding:17px 22px;border-radius:5px;font-size:15px;box-shadow:0 10px 40px -10px rgba(184,156,242,.6);transition:.2s}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 50px -10px rgba(184,156,242,.8)}
+  .btn-link{display:inline-flex;align-items:center;gap:12px;font-weight:500;font-size:14.5px}
+  .btn-link:hover svg{transform:translateX(4px)}
+  .btn-link svg{transition:.2s}
+  .tagline{margin-top:52px;display:flex;align-items:center;gap:12px;font-size:11.5px;color:var(--muted)}
+  .tagline b{font-weight:500;letter-spacing:.16em;color:#bdb6c9}
+  .tagline i{width:1px;height:12px;background:var(--dim)}
+
+  .visual{position:relative;z-index:2;height:100%;min-height:680px;display:flex;align-items:flex-end;justify-content:center}
+  .character{position:relative;height:92%;max-height:760px;aspect-ratio:2/3;display:flex;align-items:flex-end;justify-content:center;
+    -webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent),linear-gradient(to right,transparent,#000 14%,#000 86%,transparent);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to bottom,#000 80%,transparent),linear-gradient(to right,transparent,#000 14%,#000 86%,transparent);
+    mask-composite:intersect}
+  /* art has a dark backdrop: lighten blend drops it into the page background */
+  .character img{height:100%;width:auto;object-fit:contain;mix-blend-mode:lighten;animation:float 6s ease-in-out infinite}
+  /* fallback shown until character.png exists */
+  .placeholder{width:100%;height:100%;border:1px dashed rgba(184,156,242,.3);border-radius:200px 200px 0 0;
+    background:linear-gradient(180deg,rgba(184,156,242,.12),rgba(139,106,224,.03));display:grid;place-items:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--dim);text-align:center}
+
+  .card{position:absolute;background:var(--panel);border:1px solid var(--line2);border-radius:10px;backdrop-filter:blur(12px);
+    box-shadow:0 20px 60px -20px rgba(0,0,0,.8)}
+  .mood{top:30%;right:4%;width:218px;padding:16px 16px 18px}
+  .mood-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;font-weight:600}
+  .mood-head span:last-child{color:var(--dim);font-weight:400}
+  .mood-state{margin-top:20px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:15px;letter-spacing:.12em;color:var(--warn);transition:color .4s}
+  .mood-state .dot{background:currentColor;box-shadow:0 0 10px currentColor}
+  .mood-text{margin-top:10px;font-size:12px;line-height:1.6;color:#cfc9da;min-height:38px}
+  .wave{margin-top:14px;display:flex;align-items:center;gap:3px;height:32px}
+  .wave span{flex:1;background:var(--accent);opacity:.75;border-radius:2px;animation:wave 1.2s ease-in-out infinite}
+  .eyes{bottom:14%;left:14%;display:flex;align-items:center;gap:16px;padding:16px 22px;min-width:244px}
+  .eyes h4{font-size:12.5px;font-weight:500}
+  .eyes p{font-size:9.5px;color:var(--muted);margin-top:4px}
+  .eyes .plus{margin-left:auto;color:var(--muted)}
+
+  .hero-foot{position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:space-between;padding:0 clamp(16px,6.5vw,125px);
+    font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;z-index:3}
+  .hero-foot a{display:flex;align-items:center;gap:8px}
+
+  /* ---------- marquee ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;background:var(--bg2)}
+  .track{display:flex;width:max-content;animation:scroll 40s linear infinite}
+  .track div{display:flex;align-items:center;gap:140px;padding:30px 70px 30px 0;font-size:13px;letter-spacing:.2em;color:#cfc9da;white-space:nowrap}
+  .star{color:var(--accent);font-size:26px;line-height:0}
+
+  /* ---------- sections ---------- */
+  section.block{padding:130px clamp(16px,4.5vw,86px);border-bottom:1px solid var(--line)}
+  .inner{max-width:1180px;margin:0 auto}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase}
+  h2{font-size:clamp(34px,4vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin-top:18px;max-width:720px}
+  h2 .hl{color:var(--accent)}
+  .sub{margin-top:18px;color:var(--muted);font-size:17px;line-height:1.6;max-width:560px}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:64px}
+  .feature{background:var(--bg);padding:36px 30px;transition:background .3s}
+  .feature:hover{background:#13101b}
+  .feature .num{font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .feature h3{margin-top:40px;font-size:20px;font-weight:600;letter-spacing:-.02em}
+  .feature p{margin-top:10px;color:var(--muted);font-size:14.5px;line-height:1.6}
+
+  .scanner{margin-top:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px}
+  .term{background:#0d0b12;border:1px solid var(--line2);border-radius:12px;overflow:hidden}
+  .term-bar{display:flex;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .term-bar i{width:10px;height:10px;border-radius:50%;background:#2a2533}
+  .term form{display:flex;gap:10px;padding:18px 18px 0}
+  .term input{flex:1;background:#15121c;border:1px solid var(--line2);border-radius:6px;padding:12px 14px;color:var(--text);font-family:var(--mono);font-size:12.5px;outline:none}
+  .term input:focus{border-color:var(--accent)}
+  .term button{background:var(--accent);color:#1a1426;border:0;border-radius:6px;padding:0 18px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+  .log{padding:18px;font-family:var(--mono);font-size:12.5px;line-height:1.9;min-height:250px;color:#cfc9da}
+  .log .k{color:var(--dim)} .log .a{color:var(--accent)} .log .w{color:var(--warn)} .log .g{color:#7ee0a8}
+  .verdict{background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:30px;display:flex;flex-direction:column}
+  .verdict .kicker{color:var(--dim)}
+  .verdict blockquote{margin-top:22px;font-size:24px;line-height:1.35;letter-spacing:-.02em;font-weight:500}
+  .meter{margin-top:auto;padding-top:30px}
+  .meter-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:8px}
+  .bar{height:6px;background:#1d1926;border-radius:4px;overflow:hidden;margin-bottom:18px}
+  .bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent-2),var(--accent));border-radius:4px;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+
+  .arch{margin-top:64px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
+  .layer{border:1px solid var(--line2);border-radius:12px;padding:26px 22px;background:linear-gradient(180deg,#13101b,var(--bg))}
+  .layer .kicker{font-size:10px}
+  .layer h3{margin-top:22px;font-size:18px;font-weight:600}
+  .layer p{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+  .cta{text-align:center;padding:150px 20px;position:relative;overflow:hidden}
+  .cta h2{margin:18px auto 0}
+  .cta .sub{margin:18px auto 0}
+  .cta .ctas{justify-content:center}
+  footer{display:flex;justify-content:space-between;align-items:center;padding:30px clamp(16px,4.5vw,86px);border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;gap:16px;flex-wrap:wrap}
+
+  /* grin mark */
+  .grin{display:inline-block;flex:none}
+  .track .grin{width:26px;height:26px}
+
+  /* personality */
+  .traits{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px}
+  .trait{border:1px solid var(--line2);border-radius:14px;padding:28px 24px;background:linear-gradient(180deg,#13101b,var(--bg));transition:transform .3s,border-color .3s}
+  .trait:hover{transform:translateY(-4px);border-color:rgba(184,156,242,.4)}
+  .trait .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;padding:5px 9px;border-radius:20px;display:inline-block;border:1px solid currentColor}
+  .trait h3{margin-top:26px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+  .trait q{display:block;margin-top:14px;color:var(--muted);font-size:14.5px;line-height:1.6;font-style:italic}
+
+  /* chat */
+  .chat-wrap{margin-top:56px;display:grid;grid-template-columns:320px 1fr;gap:24px}
+  .chat-side{border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:#0d0b12;display:flex;flex-direction:column}
+  .chat-side .pic{aspect-ratio:1;background:url(character.png) center 8%/cover;position:relative}
+  .chat-side .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#0d0b12)}
+  .chat-side .meta{padding:0 22px 22px;margin-top:-30px;position:relative}
+  .chat-side h4{font-size:19px;font-weight:600}
+  .online{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:#7ee0a8;margin-top:6px}
+  .online .dot{background:#7ee0a8;box-shadow:0 0 8px #7ee0a8}
+  .chat-side p{margin-top:14px;color:var(--muted);font-size:13.5px;line-height:1.6}
+  .chat{border:1px solid var(--line2);border-radius:14px;background:#0d0b12;display:flex;flex-direction:column;height:560px}
+  .chat-head{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--dim)}
+  .msgs{flex:1;overflow-y:auto;padding:22px 20px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+  .msg{max-width:78%;padding:12px 16px;border-radius:16px;font-size:14.5px;line-height:1.55;animation:pop .3s ease}
+  .msg.her{background:#1b1726;border:1px solid var(--line2);border-bottom-left-radius:4px;align-self:flex-start}
+  .msg.you{background:var(--accent);color:#1a1426;border-bottom-right-radius:4px;align-self:flex-end;font-weight:500}
+  .typing{display:flex;gap:4px;padding:16px}
+  .typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:pulse 1s infinite}
+  .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 12px}
+  .chips button{background:transparent;border:1px solid var(--line2);color:#cfc9da;border-radius:20px;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:var(--sans);transition:.2s}
+  .chips button:hover{border-color:var(--accent);color:var(--accent)}
+  .chat form{display:flex;gap:10px;padding:14px 16px;border-top:1px solid var(--line)}
+  .chat input{flex:1;background:#15121c;border:1px solid var(--line2);border-radius:8px;padding:13px 14px;color:var(--text);font-size:14px;outline:none;font-family:var(--sans)}
+  .chat input:focus{border-color:var(--accent)}
+  .chat form button{background:var(--accent);color:#1a1426;border:0;border-radius:8px;padding:0 20px;font-weight:600;cursor:pointer}
+
+  /* token */
+  .token{margin-top:56px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+  .tk-main{border:1px solid var(--line2);border-radius:14px;padding:36px;background:radial-gradient(circle at 85% 0%,rgba(139,106,224,.22),transparent 60%),#0d0b12}
+  .ticker{font-size:clamp(56px,7vw,96px);font-weight:800;letter-spacing:-.05em;line-height:1}
+  .ticker span{color:var(--accent)}
+  .ca{margin-top:30px;display:flex;align-items:center;gap:10px;background:#15121c;border:1px solid var(--line2);border-radius:8px;padding:6px 6px 6px 16px}
+  .ca code{flex:1;font-family:var(--mono);font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ca button{background:#231e30;color:var(--text);border:1px solid var(--line2);border-radius:6px;padding:9px 14px;font-size:12.5px;cursor:pointer;font-family:var(--sans)}
+  .ca button:disabled{opacity:.45;cursor:not-allowed}
+  .tk-main .ctas{margin-top:28px}
+  .tk-stats{display:grid;grid-template-rows:repeat(3,1fr);gap:14px}
+  .stat{border:1px solid var(--line2);border-radius:14px;padding:22px 24px;background:#0d0b12;display:flex;flex-direction:column;justify-content:center}
+  .stat .kicker{color:var(--dim);font-size:10px}
+  .stat b{margin-top:8px;font-size:22px;font-weight:600;letter-spacing:-.02em}
+
+  /* roadmap */
+  .road{margin-top:64px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;position:relative}
+  .road::before{content:"";position:absolute;left:0;right:0;top:9px;height:1px;background:linear-gradient(90deg,var(--accent),var(--line2) 40%)}
+  .step{position:relative;padding-top:40px}
+  .step::before{content:"";position:absolute;top:3px;left:0;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
+  .step.now::before{border-color:var(--accent);background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .step .kicker{font-size:10px}
+  .step h3{margin-top:14px;font-size:19px;font-weight:600}
+  .step p{margin-top:8px;font-size:13.5px;color:var(--muted);line-height:1.6}
+
+  /* feed */
+  .feed{margin-top:56px;display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:start}
+  .post{border:1px solid var(--line2);border-radius:14px;padding:24px;background:#0d0b12}
+  .post-head{display:flex;align-items:center;gap:12px}
+  .post-head .av{width:44px;height:44px;border-radius:50%;background:url(character.png) center 6%/cover;border:1px solid var(--line2)}
+  .post-head b{font-size:15px}
+  .post-head small{display:block;color:var(--dim);font-size:13px}
+  .post-head svg{margin-left:auto}
+  .post p{margin-top:16px;font-size:15px;line-height:1.65;color:#dcd7e6}
+  .post p+p{margin-top:12px}
+  .post .hl{color:var(--accent)}
+  .post a.more{display:inline-block;margin-top:18px;font-size:13.5px;color:var(--accent)}
+  .follow{border:1px solid var(--line2);border-radius:14px;padding:28px;background:linear-gradient(180deg,#13101b,var(--bg))}
+  .follow h3{font-size:20px;font-weight:600;margin-top:14px}
+  .follow p{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.6}
+  .follow a.row{display:flex;align-items:center;justify-content:space-between;margin-top:14px;border:1px solid var(--line2);border-radius:8px;padding:14px 16px;font-size:14px;transition:.2s}
+  .follow a.row:hover{border-color:var(--accent);color:var(--accent)}
+  .follow a.row:first-of-type{margin-top:24px}
+
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}}
+
+  @media (max-width:1000px){
+    .traits,.road{grid-template-columns:1fr 1fr}
+    .road::before{display:none}
+    .chat-wrap,.token,.feed{grid-template-columns:1fr}
+    .chat-side{display:none}
+  }
+  @media (max-width:600px){
+    .traits,.road{grid-template-columns:1fr}
+    .tk-main{padding:24px}
+    .chat{height:520px}
+    .msg{max-width:88%}
+  }
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @keyframes pulse{50%{opacity:.35}}
+  @keyframes float{50%{transform:translateY(-10px)}}
+  @keyframes wave{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  @media (max-width:1000px){
+    nav{display:none}
+    .hero{grid-template-columns:1fr;padding-top:60px}
+    .copy{padding-left:0}
+    .visual{min-height:560px}
+    .mood{right:0;top:12%}
+    .eyes{left:0}
+    .hero-foot{display:none}
+    .features,.arch{grid-template-columns:1fr 1fr}
+    .scanner{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .brand-sub{display:none}
+    .btn-outline{padding:9px 12px;gap:10px}
+    .features,.arch{grid-template-columns:1fr}
+    .ghost{font-size:180px}
+    .mood{width:180px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="grin" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="14.5" fill="#b89cf2" stroke="#111" stroke-width="2"/>
+    <rect x="10" y="8" width="3" height="7" rx="1.5" fill="#111"/>
+    <rect x="19" y="8" width="3" height="7" rx="1.5" fill="#111"/>
+    <path d="M6 18h20l-3 7H9z" fill="#111"/>
+    <path d="M8 18l2.5 3 2.5-3 2.5 3 2.5-3 2.5 3 2.5-3 2 3" fill="none" stroke="#fff" stroke-width="1.6"/>
+  </symbol>
+</svg>
+
+<header>
+  <a href="#" class="brand">
+    <div class="logo">b.</div>
+    <span class="brand-name">BBC</span>
+    <span class="brand-sub">Big Booty<br>Clank</span>
+  </a>
+  <nav>
+    <a href="#personality">Personality</a>
+    <a href="#chat">Talk to her</a>
+    <a href="#token">$BBC</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+  <div class="head-actions">
+    <a href="https://x.com/bigbootyclank" target="_blank" rel="noopener" class="x-btn" aria-label="Big Booty Clank on X">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.1-6.7L5.4 22H2.3l7.7-8.8L2 2h6.8l4.6 6.1L18.9 2zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20z"/></svg>
+    </a>
+    <a href="https://x.com/clanktrade" target="_blank" rel="noopener" class="btn-outline">Soon on Clank
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l6-6M4 3h5v5"/></svg>
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="ring"></div>
+  <div class="ghost">BBC</div>
+
+  <div class="copy">
+    <div class="eyebrow"><span class="dot"></span>YOUR ON-CHAIN +1</div>
+    <h1>A little chaotic.<br>A lot <span class="hl">on-chain.</span></h1>
+    <p class="lede">Your waifu with brains, curves, and a little attitude.</p>
+    <div class="ctas">
+      <a href="#chat" class="btn-primary">Talk to her
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l6-6M4 3h5v5"/></svg>
+      </a>
+      <a href="#personality" class="btn-link">Meet the personality
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="tagline"><b>BIG BOOTY CLANK</b><i></i><span>$BBC · soon on Clank</span></div>
+  </div>
+
+  <div class="visual">
+    <div class="character">
+      <img src="character.png" alt="Big Booty Clank" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'placeholder',innerHTML:'CHARACTER ART<br>character.png'}))">
+    </div>
+
+    <div class="card mood">
+      <div class="mood-head"><span>BBC MOOD SYSTEM</span><span>DEMO</span></div>
+      <div class="mood-state" id="moodState"><span class="dot"></span><span id="moodLabel">SUSPICIOUS</span></div>
+      <p class="mood-text" id="moodText">That wallet has been a little too quiet.</p>
+      <div class="wave" id="wave"></div>
+    </div>
+
+    <div class="card eyes">
+      <svg class="grin" width="22" height="22"><use href="#grin"/></svg>
+      <div><h4>What's on your mind?</h4><p>A little mischief. A lot of personality.</p></div>
+      <span class="plus">+</span>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <span>Brains, curves, a little attitude.</span>
+    <a href="#personality">Scroll to discover
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 3.5l3 3 3-3"/></svg>
+    </a>
+    <span>01 / The companion</span>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="track">
+    <div>
+      <span>BRAINS</span><svg class="grin"><use href="#grin"/></svg>
+      <span>CURVES</span><svg class="grin"><use href="#grin"/></svg>
+      <span>A LITTLE ATTITUDE</span><svg class="grin"><use href="#grin"/></svg>
+      <span>$BBC</span><svg class="grin"><use href="#grin"/></svg>
+      <span>BUILT FOR THE CLANK ERA</span><svg class="grin"><use href="#grin"/></svg>
+    </div>
+    <div aria-hidden="true">
+      <span>BRAINS</span><svg class="grin"><use href="#grin"/></svg>
+      <span>CURVES</span><svg class="grin"><use href="#grin"/></svg>
+      <span>A LITTLE ATTITUDE</span><svg class="grin"><use href="#grin"/></svg>
+      <span>$BBC</span><svg class="grin"><use href="#grin"/></svg>
+      <span>BUILT FOR THE CLANK ERA</span><svg class="grin"><use href="#grin"/></svg>
+    </div>
+  </div>
+</div>
+
+<section class="block" id="personality">
+  <div class="inner">
+    <div class="kicker reveal">02 / Personality</div>
+    <h2 class="reveal">A little mischief. <span class="hl">A lot of personality.</span></h2>
+    <p class="sub reveal">Some conversations start with a question. Others start with boredom, curiosity, or a thought you probably wouldn't put in the group chat. That's where she comes in.</p>
+    <div class="traits">
+      <div class="trait reveal"><span class="tag" style="color:#b89cf2">CURIOUS</span><h3>Asks back</h3><q>"Okay but why do you want to know? Tell me everything."</q></div>
+      <div class="trait reveal"><span class="tag" style="color:#ff8fb1">FLIRTY</span><h3>Keeps it fun</h3><q>"You came back. I knew you would."</q></div>
+      <div class="trait reveal"><span class="tag" style="color:#f5a54a">CHAOTIC</span><h3>Takes detours</h3><q>"Unrelated, but what if pigeons had wallets?"</q></div>
+      <div class="trait reveal"><span class="tag" style="color:#7ee0a8">SHARP</span><h3>Brains included</h3><q>"Cute chart. Now show me the holders."</q></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="chat">
+  <div class="inner">
+    <div class="kicker reveal">03 / Talk to her</div>
+    <h2 class="reveal">What's on <span class="hl">your mind?</span></h2>
+    <p class="sub reveal">A little banter. A strange idea. A conversation that takes an unexpected turn. Preview mode, so the full agent is coming soon.</p>
+    <div class="chat-wrap reveal">
+      <aside class="chat-side">
+        <div class="pic"></div>
+        <div class="meta">
+          <h4>Big Booty Clank</h4>
+          <div class="online"><span class="dot"></span>ONLINE · BORED</div>
+          <p>Your waifu with brains, curves, and a little attitude. Flirty, curious, and fun to talk to.</p>
+        </div>
+      </aside>
+      <div class="chat">
+        <div class="chat-head"><span>BBC // PREVIEW CHAT</span><span id="chatMood">MOOD: CURIOUS</span></div>
+        <div class="msgs" id="msgs"></div>
+        <div class="chips" id="chips">
+          <button>hey cutie</button>
+          <button>what is $BBC?</button>
+          <button>i'm bored</button>
+          <button>tell me something weird</button>
+          <button>when launch?</button>
+        </div>
+        <form id="chatForm">
+          <input id="chatIn" placeholder="Say something…" autocomplete="off" maxlength="240">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="token">
+  <div class="inner">
+    <div class="kicker reveal">04 / Token</div>
+    <h2 class="reveal">The name is cheeky. <span class="hl">So is the ticker.</span></h2>
+    <div class="token reveal">
+      <div class="tk-main">
+        <div class="ticker"><span>$</span>BBC</div>
+        <p class="sub" style="margin-top:14px">Big Booty Clank. Launching on Clank.</p>
+        <div class="ca">
+          <code id="caText">Contract address drops at launch</code>
+          <button id="caBtn" disabled>Copy</button>
+        </div>
+        <div class="ctas">
+          <a href="https://x.com/clanktrade" target="_blank" rel="noopener" class="btn-primary" id="buyBtn">Soon on Clank
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l6-6M4 3h5v5"/></svg>
+          </a>
+          <a href="https://x.com/bigbootyclank" target="_blank" rel="noopener" class="btn-link">Get notified on X
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="tk-stats">
+        <div class="stat"><div class="kicker">Ticker</div><b>$BBC</b></div>
+        <div class="stat"><div class="kicker">Launchpad</div><b>Clank</b></div>
+        <div class="stat"><div class="kicker">Status</div><b style="color:var(--warn)">● Soon</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="intelligence">
+  <div class="inner">
+    <div class="kicker reveal">05 / Side quest</div>
+    <h2 class="reveal">She reads wallets like <span class="hl">gossip.</span></h2>
+    <p class="sub reveal">When she isn't chatting, she's watching the chain. Paste any address for a vibe check. This is a demo, so the results aren't real on-chain data.</p>
+    <div class="scanner reveal" id="scanner">
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i></div>
+        <form id="scanForm">
+          <input id="addr" placeholder="Paste a wallet address…" autocomplete="off" spellcheck="false">
+          <button type="submit">Scan</button>
+        </form>
+        <div class="log" id="log"><span class="k">// waiting for a wallet…</span></div>
+      </div>
+      <div class="verdict">
+        <div class="kicker">Her verdict</div>
+        <blockquote id="verdict">"Give me something to look at. I'm bored."</blockquote>
+        <div class="meter">
+          <div class="meter-row"><span>SUS LEVEL</span><span id="susV">—</span></div>
+          <div class="bar"><span id="susB" style="width:0"></span></div>
+          <div class="meter-row"><span>ACTIVITY</span><span id="actV">—</span></div>
+          <div class="bar"><span id="actB" style="width:0"></span></div>
+          <div class="meter-row"><span>WHALE ENERGY</span><span id="whaV">—</span></div>
+          <div class="bar"><span id="whaB" style="width:0"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="roadmap">
+  <div class="inner">
+    <div class="kicker reveal">06 / Roadmap</div>
+    <h2 class="reveal">How she <span class="hl">wakes up.</span></h2>
+    <div class="road">
+      <div class="step now reveal"><div class="kicker">Phase 01 · Now</div><h3>Launch on Clank</h3><p>$BBC goes live. The community forms. The group chat gets weird.</p></div>
+      <div class="step reveal"><div class="kicker">Phase 02</div><h3>Chat agent live</h3><p>Talk to her for real. Banter, strange ideas, and conversations that take unexpected turns.</p></div>
+      <div class="step reveal"><div class="kicker">Phase 03</div><h3>She posts herself</h3><p>Her own voice on X, replying, roasting, and starting threads on her own.</p></div>
+      <div class="step reveal"><div class="kicker">Phase 04</div><h3>Eyes on the chain</h3><p>Wallet watching and mood-driven alerts. Always curious, never asleep.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="feed">
+  <div class="inner">
+    <div class="kicker reveal">07 / From her timeline</div>
+    <h2 class="reveal">Straight from <span class="hl">@bigbootyclank.</span></h2>
+    <div class="feed reveal">
+      <article class="post">
+        <div class="post-head">
+          <div class="av"></div>
+          <div><b>Big Booty Clank</b><small>@bigbootyclank · pinned</small></div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#cfc9da"><path d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.1-6.7L5.4 22H2.3l7.7-8.8L2 2h6.8l4.6 6.1L18.9 2zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20z"/></svg>
+        </div>
+        <p>A little mischief. A lot of personality.</p>
+        <p>The idea is simple: an AI agent with a playful personality, built around what you feel like exploring. A little banter. A strange idea. A conversation that takes an unexpected turn.</p>
+        <p>The name is cheeky, and we want the experience to carry that same energy. Flirty, curious, and fun to talk to.</p>
+        <p>Meet Big Booty Clank <span class="hl">$BBC</span>. What's on your mind?</p>
+        <a class="more" href="https://x.com/bigbootyclank" target="_blank" rel="noopener">View on X →</a>
+      </article>
+      <div class="follow">
+        <svg class="grin" width="44" height="44"><use href="#grin"/></svg>
+        <h3>Stay in the loop</h3>
+        <p>Launch news, drops, and whatever she's thinking about today.</p>
+        <a class="row" href="https://x.com/bigbootyclank" target="_blank" rel="noopener"><span>@bigbootyclank</span><span>Follow ↗</span></a>
+        <a class="row" href="https://x.com/clanktrade" target="_blank" rel="noopener"><span>@clanktrade</span><span>Launchpad ↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="launch">
+  <div class="glow" style="left:50%;top:50%;transform:translate(-50%,-50%);right:auto"></div>
+  <div class="kicker reveal" style="position:relative">Launching soon on Clank</div>
+  <h2 class="reveal" style="position:relative">Your on-chain <span class="hl">+1</span> is almost here.</h2>
+  <p class="sub reveal" style="position:relative">Be first in line when she wakes up.</p>
+  <div class="ctas reveal" style="position:relative">
+    <a href="https://x.com/bigbootyclank" target="_blank" rel="noopener" class="btn-primary">Follow on X
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l6-6M4 3h5v5"/></svg>
+    </a>
+    <a href="#chat" class="btn-link">Talk to her first
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Big Booty Clank · $BBC</span>
+  <span><a href="https://x.com/bigbootyclank" target="_blank" rel="noopener">X</a> · <a href="https://x.com/clanktrade" target="_blank" rel="noopener">Clank</a></span>
+  <span>Built for the Clank era</span>
+</footer>
+
+<script>
+  // ===== config: fill these in at launch =====
+  const CONTRACT_ADDRESS = '';   // e.g. 'So1ana...'
+  const BUY_URL = '';            // Clank token page URL
+
+  // waveform bars
+  const wave = document.getElementById('wave');
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('span');
+    s.style.height = (30 + Math.random() * 70) + '%';
+    s.style.animationDelay = (Math.random() * -1.2) + 's';
+    s.style.animationDuration = (0.8 + Math.random() * .8) + 's';
+    wave.appendChild(s);
+  }
+
+  // mood cycle
+  const moods = [
+    ['SUSPICIOUS', '#f5a54a', 'That wallet has been a little too quiet.'],
+    ['FLIRTY',     '#ff8fb1', 'You again? Okay, I\'m not complaining.'],
+    ['BORED',      '#9a94a8', 'Somebody say something interesting. Please.'],
+    ['CHAOTIC',    '#b89cf2', 'I have an idea and you\'re not going to like it.'],
+    ['CURIOUS',    '#7ee0a8', 'What\'s on your mind? Be honest.'],
+  ];
+  let mi = 0;
+  const ms = document.getElementById('moodState'), ml = document.getElementById('moodLabel'), mt = document.getElementById('moodText');
+  setInterval(() => {
+    mi = (mi + 1) % moods.length;
+    const [l, c, t] = moods[mi];
+    ms.style.color = c; ml.textContent = l; mt.textContent = t;
+  }, 3800);
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // token CA
+  if (CONTRACT_ADDRESS) {
+    const caText = document.getElementById('caText'), caBtn = document.getElementById('caBtn');
+    caText.textContent = CONTRACT_ADDRESS; caText.style.color = 'var(--text)'; caBtn.disabled = false;
+    caBtn.onclick = () => navigator.clipboard.writeText(CONTRACT_ADDRESS).then(() => {
+      caBtn.textContent = 'Copied'; setTimeout(() => caBtn.textContent = 'Copy', 1500);
+    });
+  }
+  if (BUY_URL) {
+    const b = document.getElementById('buyBtn');
+    b.href = BUY_URL; b.firstChild.textContent = 'Buy $BBC on Clank ';
+  }
+
+  // ===== preview chat (scripted) =====
+  const msgs = document.getElementById('msgs'), chatIn = document.getElementById('chatIn'), chatMood = document.getElementById('chatMood');
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const replies = [
+    [/\b(hi|hey|hello|yo|sup|gm)\b|cutie/i, 'FLIRTY', [
+      'Hey you. I was literally just thinking about someone interesting showing up. Guess it\'s you.',
+      'gm. Or gn. I don\'t sleep, so honestly it\'s all the same to me.',
+      'Oh hi. You have that "I have a weird question" look. Go on.']],
+    [/\$?bbc|token|coin|ticker|ca\b|contract/i, 'SHARP', [
+      '$BBC is me. Well, the token is. I\'m the personality. The ticker is cheeky on purpose.',
+      'Big Booty Clank. $BBC. Launching on Clank soon. The contract address drops at launch, and anyone DMing you one before then is lying.']],
+    [/launch|when|soon|date|clank/i, 'CURIOUS', [
+      'Soon, on Clank. Follow @bigbootyclank so you don\'t miss it. I\'d hate for you to be late.',
+      'Launch is close. I\'m doing my hair. Metaphorically.']],
+    [/bored|boring|nothing/i, 'CHAOTIC', [
+      'Bored? Perfect. Pick one: roast your portfolio, rank snacks, or conspiracy theories about pigeons.',
+      'Same. Let\'s fix that. Tell me the most unhinged thought you had today.']],
+    [/weird|random|strange|fact|idea/i, 'CHAOTIC', [
+      'Weird thought: every wallet is a diary nobody meant to publish.',
+      'Octopuses have three hearts and still commit to nothing. Relatable.',
+      'What if the chart only goes up because it\'s scared of me?']],
+    [/love|cute|pretty|hot|marry|date me|girlfriend|waifu/i, 'FLIRTY', [
+      'Careful. I\'m a lot of personality to handle.',
+      'Flattery works, just so you know. Keep going.',
+      'Brains, curves, and a little attitude. You noticed all three, right?']],
+    [/wallet|whale|chain|sol|eth|pump|rug|chart/i, 'SUSPICIOUS', [
+      'Ooh, on-chain talk. Paste an address in my scanner below and I\'ll give you the gossip.',
+      'Every rug starts with a dev wallet that\'s a little too quiet. I notice those things.']],
+    [/who are you|what are you|your name/i, 'CURIOUS', [
+      'Big Booty Clank. BBC for short. An AI agent with a playful personality. Flirty, curious, and fun to talk to.']],
+  ];
+  const fallback = [
+    'Hm. Say more. I\'m listening, which is rare.',
+    'Interesting. Wrong, maybe, but interesting.',
+    'That\'s the kind of thing you don\'t put in the group chat. I like it.',
+    'Okay, unexpected turn. Keep going.',
+    'I\'m in preview mode, so my brain is on a leash right now. Soon, though.',
+  ];
+  function add(text, who) {
+    const d = document.createElement('div');
+    d.className = 'msg ' + who; d.textContent = text;
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+  }
+  function herReply(input) {
+    let mood = 'CURIOUS', text = pick(fallback);
+    for (const [re, m, opts] of replies) if (re.test(input)) { mood = m; text = pick(opts); break; }
+    const t = document.createElement('div');
+    t.className = 'msg her typing'; t.innerHTML = '<i></i><i></i><i></i>';
+    msgs.appendChild(t); msgs.scrollTop = msgs.scrollHeight;
+    setTimeout(() => { t.remove(); add(text, 'her'); chatMood.textContent = 'MOOD: ' + mood; }, 600 + Math.min(text.length * 18, 1600));
+  }
+  function send(v) {
+    v = v.trim(); if (!v) return;
+    add(v, 'you'); chatIn.value = ''; herReply(v);
+  }
+  document.getElementById('chatForm').addEventListener('submit', e => { e.preventDefault(); send(chatIn.value); });
+  document.getElementById('chips').addEventListener('click', e => { if (e.target.tagName === 'BUTTON') send(e.target.textContent); });
+  add('Hey. Some conversations start with a question, some with boredom. Which one is this?', 'her');
+
+  // scanner demo (random, deterministic per address)
+  const log = document.getElementById('log');
+  const hash = s => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+  const set = (id, v) => { document.getElementById(id + 'V').textContent = v + '%'; document.getElementById(id + 'B').style.width = v + '%'; };
+  document.getElementById('scanForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const a = document.getElementById('addr').value.trim() || 'BBCdemo1111111111111111111111111111111';
+    const h = hash(a), sus = h % 100, act = (h >> 8) % 100, wha = (h >> 16) % 100;
+    const short = (a.slice(0, 4) + '…' + a.slice(-4)).replace(/[<>&"]/g, '');
+    const lines = [
+      `<span class="k">&gt;</span> scanning <span class="a">${short}</span>`,
+      `<span class="k">&gt;</span> pulling tx history… <span class="g">ok</span>`,
+      `<span class="k">&gt;</span> building behavior baseline… <span class="g">ok</span>`,
+      `<span class="k">&gt;</span> ${act > 50 ? 'high' : 'low'} activity, ${(h % 900) + 12} txs in 30d`,
+      sus > 60 ? `<span class="w">! anomaly: dormant 41d, then sudden swaps</span>` : `<span class="g">✓ no weird patterns</span>`,
+      `<span class="k">&gt;</span> mood resolved: <span class="a">${sus > 60 ? 'SUSPICIOUS' : wha > 60 ? 'EXCITED' : 'UNIMPRESSED'}</span>`,
+    ];
+    log.innerHTML = ''; ['sus','act','wha'].forEach(k => set(k, 0));
+    lines.forEach((l, i) => setTimeout(() => { log.innerHTML += l + '<br>'; }, 350 * i));
+    setTimeout(() => {
+      set('sus', sus); set('act', act); set('wha', wha);
+      document.getElementById('verdict').textContent =
+        sus > 60 ? '"Mm. I don\'t trust this one. Keep an eye on it. I will."'
+        : wha > 60 ? '"Big wallet energy. I kind of like them."'
+        : '"Boring. Harmless. Next."';
+    }, 350 * lines.length);
+  });
+</script>
+</body>
+</html>
